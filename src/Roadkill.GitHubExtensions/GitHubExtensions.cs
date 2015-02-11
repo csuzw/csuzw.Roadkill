@@ -9,9 +9,9 @@ namespace Roadkill.GitHubExtensions
     public class GitHubExtensions : TextPlugin
     {
         private static readonly Regex TableRegex = new Regex(@"
-            ^\| (?: (.*?) \|)+$\n
-            ^\| (?: (\:?\-*\:?) \|)+$
-            (?: \n ^\| ((?: (.*?) \|)+)$ )*",
+            \| (?: (.*?) \|)+\s*$\n
+            ^\| (?: (\:?\-*\:?) \|)+\s*$
+            (?: \n ^\| ((?: (.*?) \|)+)* )*",
             RegexOptions.Multiline | RegexOptions.IgnorePatternWhitespace | RegexOptions.Compiled);
 
         private static readonly Regex CodeBlockRegex = new Regex(@"
@@ -52,11 +52,17 @@ namespace Roadkill.GitHubExtensions
 
         public override string BeforeParse(string markupText)
         {
-            markupText = TableRegex.Replace(markupText, TableEvaluator);
             markupText = CodeBlockRegex.Replace(markupText, CodeBlockEvaluator);
             markupText = StrikethroughRegex.Replace(markupText, StrikethroughEvaluator);
 
             return markupText;
+        }
+
+        public override string AfterParse(string html)
+        {
+            html = TableRegex.Replace(html, TableEvaluator);
+
+            return html;
         }
 
         private string TableEvaluator(Match match)
@@ -80,7 +86,7 @@ namespace Roadkill.GitHubExtensions
 
             string codeBlock = HttpUtility.HtmlEncode(match.Groups[3].Value);
 
-            return string.Concat("\n\n<pre class=\"brush: ", language, "\">", codeBlock, "\n</pre>\n\n");
+            return string.Concat("\n\n<pre class=\"brush: ", language, "\">", codeBlock, "</pre>\n\n");
         }
 
         private string StrikethroughEvaluator(Match match)
