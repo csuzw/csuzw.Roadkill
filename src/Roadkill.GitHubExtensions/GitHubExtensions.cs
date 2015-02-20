@@ -8,6 +8,23 @@ namespace Roadkill.GitHubExtensions
 {
     public class GitHubExtensions : TextPlugin
     {
+        private static readonly Regex PreProcessorRegex = new Regex(@"
+            (?:(?<content>[\s|\S]*?)(?:<code>
+	            [^<>]*
+	            (?:
+		            (?:
+			            (?<OpenCode><code>)
+			            [^<>]*
+		            )+
+              (?:
+			            (?<CloseCode-OpenCode></code>)
+			            [^<>]*
+		            )+
+	            )*
+	            (?(OpenCode)(?!))
+            </code>))*(?<end>[\s|\S]+)", 
+            RegexOptions.Multiline | RegexOptions.IgnorePatternWhitespace | RegexOptions.Compiled);
+
         private static readonly Regex TableRegex = new Regex(@"
             \| (?: (.*?) \|)+\s*$\n
             ^\| (?: (\:?\-*\:?) \|)+\s*$
@@ -17,7 +34,7 @@ namespace Roadkill.GitHubExtensions
         private static readonly Regex CodeBlockRegex = new Regex(@"
             (?<!\\)
             (`{3})
-            (\w*)
+            ([\w-]*)
             (
 			(?:
 				.*\n+
@@ -53,13 +70,13 @@ namespace Roadkill.GitHubExtensions
         public override string BeforeParse(string markupText)
         {
             markupText = CodeBlockRegex.Replace(markupText, CodeBlockEvaluator);
-            markupText = StrikethroughRegex.Replace(markupText, StrikethroughEvaluator);
 
             return markupText;
         }
 
         public override string AfterParse(string html)
         {
+            html = StrikethroughRegex.Replace(html, StrikethroughEvaluator);
             html = TableRegex.Replace(html, TableEvaluator);
 
             return html;
@@ -84,9 +101,10 @@ namespace Roadkill.GitHubExtensions
                 language = "plain";
             }
 
+            string preClass = (language != "no-highlight") ? string.Format(" class=\"brush: {0}\"", language) : string.Empty;
             string codeBlock = HttpUtility.HtmlEncode(match.Groups[3].Value);
 
-            return string.Concat("\n\n<pre class=\"brush: ", language, "\">", codeBlock, "</pre>\n\n");
+            return string.Concat("\n\n<pre", preClass, ">", codeBlock, "</pre>\n\n");
         }
 
         private string StrikethroughEvaluator(Match match)
