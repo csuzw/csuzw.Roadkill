@@ -3,26 +3,28 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Web;
 using Roadkill.Core.Plugins;
+using System;
 
 namespace Roadkill.GitHubExtensions
 {
     public class GitHubExtensions : TextPlugin
     {
         private static readonly Regex PreProcessorRegex = new Regex(@"
-            (?:(?<content>[\s|\S]*?)(?:<code>
+            (?:(?<content>[\s|\S]*?)
+              (?<element><(?<en>code|pre)>
 	            [^<>]*
 	            (?:
 		            (?:
-			            (?<OpenCode><code>)
+			            (?<OpenCode><\k<en>>)
 			            [^<>]*
 		            )+
               (?:
-			            (?<CloseCode-OpenCode></code>)
+			            (?<CloseCode-OpenCode></\k<en>>)
 			            [^<>]*
 		            )+
 	            )*
 	            (?(OpenCode)(?!))
-            </code>))*(?<end>[\s|\S]+)", 
+            </\k<en>>))*(?<end>[\s|\S]+)", 
             RegexOptions.Multiline | RegexOptions.IgnorePatternWhitespace | RegexOptions.Compiled);
 
         private static readonly Regex TableRegex = new Regex(@"
@@ -69,17 +71,35 @@ namespace Roadkill.GitHubExtensions
 
         public override string BeforeParse(string markupText)
         {
-            markupText = CodeBlockRegex.Replace(markupText, CodeBlockEvaluator);
+            var blocks = GetBlocks(markupText);
 
-            return markupText;
+            var output = string.Concat(blocks.Select(b => (b.Item2) ? BeforeParseReplace(b.Item1) : b.Item1));
+
+            return output;
         }
 
         public override string AfterParse(string html)
         {
-            html = StrikethroughRegex.Replace(html, StrikethroughEvaluator);
-            html = TableRegex.Replace(html, TableEvaluator);
+            var blocks = GetBlocks(html);
 
-            return html;
+            var output = string.Concat(blocks.Select(b => (b.Item2) ? AfterParseReplace(b.Item1) : b.Item1));
+
+            return output;
+        }
+
+        private string BeforeParseReplace(string input)
+        {
+            var output = CodeBlockRegex.Replace(input, CodeBlockEvaluator);
+
+            return output;
+        }
+
+        private string AfterParseReplace(string input)
+        {
+            var output = StrikethroughRegex.Replace(input, StrikethroughEvaluator);
+            output = TableRegex.Replace(output, TableEvaluator);
+
+            return output;
         }
 
         private string TableEvaluator(Match match)
@@ -148,6 +168,30 @@ namespace Roadkill.GitHubExtensions
             var element = (isHeader) ? "th" : "td";
 
             return string.Concat("<", element, columnAlignment, ">", value.Trim(), "</", element, ">\n");
+        }
+
+        private IEnumerable<Tuple<string, bool>> GetBlocks(string input)
+        {
+            var matches = PreProcessorRegex.Match(input);
+
+            List<Tuple<string, bool>> blocks = new List<Tuple<string, bool>>();
+
+            for (int i = 0; i < matches.Groups["content"].Captures.Count; i++)
+            {
+                blocks.Add(new Tuple<string, bool>(matches.Groups["content"].Captures[i].Value, true));
+                blocks.Add(new Tuple<string, bool>(matches.Groups["element"].Captures[i].Value, false));
+            }
+            blocks.Add(new Tuple<string, bool>(matches.Groups["end"].Value, true));
+
+            //var output = ConvertBlocksToString(blocks);
+            //var isMatch = input == output;
+
+            return blocks;
+        }
+
+        private string ConvertBlocksToString(IEnumerable<Tuple<string, bool>> input)
+        {
+            return string.Concat(input.Select(i => i.Item1));
         }
     }
 }
