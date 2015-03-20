@@ -7,8 +7,8 @@
     <ProjectGuid>{18CD7A7A-5E76-435B-9ABA-7F956CC6DAD4}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Roadkill.PluginTester</RootNamespace>
-    <AssemblyName>Roadkill.PluginTester</AssemblyName>
+    <RootNamespace>csuzw.Roadkill.PluginTester</RootNamespace>
+    <AssemblyName>csuzw.Roadkill.PluginTester</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -66,6 +66,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -81,9 +82,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Roadkill.GitHubExtensions\Roadkill.GitHubExtensions.csproj">
+    <ProjectReference Include="..\csuzw.Roadkill.GitHubExtensions\csuzw.Roadkill.GitHubExtensions.csproj">
       <Project>{d6d6ecf5-8481-48de-8805-246316db2f5a}</Project>
-      <Name>Roadkill.GitHubExtensions</Name>
+      <Name>csuzw.Roadkill.GitHubExtensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\csuzw.Roadkill.TagHierarchyMenu\csuzw.Roadkill.TagHierarchyMenu.csproj">
+      <Project>{cfe53481-5af4-4aa4-8038-4ecb97df9214}</Project>
+      <Name>csuzw.Roadkill.TagHierarchyMenu</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

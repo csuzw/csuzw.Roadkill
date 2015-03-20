@@ -5,7 +5,7 @@ using System.Web;
 using Roadkill.Core.Plugins;
 using System;
 
-namespace Roadkill.GitHubExtensions
+namespace csuzw.Roadkill.GitHubExtensions
 {
     public class GitHubExtensions : TextPlugin
     {

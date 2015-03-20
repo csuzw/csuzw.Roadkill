@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Roadkill.PluginTester
+namespace csuzw.Roadkill.PluginTester
 {
     static class Program
     {

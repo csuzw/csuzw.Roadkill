@@ -1,4 +1,4 @@
-﻿namespace Roadkill.PluginTester
+﻿namespace csuzw.Roadkill.PluginTester
 {
     partial class MainForm
     {
@@ -30,9 +30,10 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.scoMain = new System.Windows.Forms.SplitContainer();
+            this.btnRun = new System.Windows.Forms.Button();
             this.txtInput = new System.Windows.Forms.TextBox();
             this.txtOutput = new System.Windows.Forms.TextBox();
-            this.btnRun = new System.Windows.Forms.Button();
+            this.cbxPlugins = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.scoMain)).BeginInit();
             this.scoMain.Panel1.SuspendLayout();
             this.scoMain.Panel2.SuspendLayout();
@@ -48,6 +49,7 @@
             // 
             // scoMain.Panel1
             // 
+            this.scoMain.Panel1.Controls.Add(this.cbxPlugins);
             this.scoMain.Panel1.Controls.Add(this.btnRun);
             this.scoMain.Panel1.Controls.Add(this.txtInput);
             // 
@@ -58,16 +60,28 @@
             this.scoMain.SplitterDistance = 224;
             this.scoMain.TabIndex = 0;
             // 
+            // btnRun
+            // 
+            this.btnRun.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnRun.Location = new System.Drawing.Point(12, 189);
+            this.btnRun.Name = "btnRun";
+            this.btnRun.Size = new System.Drawing.Size(771, 23);
+            this.btnRun.TabIndex = 1;
+            this.btnRun.Text = "Run";
+            this.btnRun.UseVisualStyleBackColor = true;
+            this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
+            // 
             // txtInput
             // 
             this.txtInput.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.txtInput.Location = new System.Drawing.Point(12, 12);
+            this.txtInput.Location = new System.Drawing.Point(12, 39);
             this.txtInput.Multiline = true;
             this.txtInput.Name = "txtInput";
             this.txtInput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.txtInput.Size = new System.Drawing.Size(771, 171);
+            this.txtInput.Size = new System.Drawing.Size(771, 144);
             this.txtInput.TabIndex = 0;
             this.txtInput.Text = resources.GetString("txtInput.Text");
             // 
@@ -84,17 +98,14 @@
             this.txtOutput.Size = new System.Drawing.Size(771, 229);
             this.txtOutput.TabIndex = 1;
             // 
-            // btnRun
+            // cbxPlugins
             // 
-            this.btnRun.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnRun.Location = new System.Drawing.Point(12, 189);
-            this.btnRun.Name = "btnRun";
-            this.btnRun.Size = new System.Drawing.Size(771, 23);
-            this.btnRun.TabIndex = 1;
-            this.btnRun.Text = "Run";
-            this.btnRun.UseVisualStyleBackColor = true;
-            this.btnRun.Click += new System.EventHandler(this.btnRun_Click);
+            this.cbxPlugins.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxPlugins.FormattingEnabled = true;
+            this.cbxPlugins.Location = new System.Drawing.Point(12, 12);
+            this.cbxPlugins.Name = "cbxPlugins";
+            this.cbxPlugins.Size = new System.Drawing.Size(771, 21);
+            this.cbxPlugins.TabIndex = 2;
             // 
             // MainForm
             // 
@@ -120,6 +131,7 @@
         private System.Windows.Forms.Button btnRun;
         private System.Windows.Forms.TextBox txtInput;
         private System.Windows.Forms.TextBox txtOutput;
+        private System.Windows.Forms.ComboBox cbxPlugins;
     }
 }
 
