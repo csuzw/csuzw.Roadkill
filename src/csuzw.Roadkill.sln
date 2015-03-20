@@ -7,13 +7,19 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "csuzw.Roadkill.GitHubExtens
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "csuzw.Roadkill.PluginTester", "csuzw.Roadkill.PluginTester\csuzw.Roadkill.PluginTester.csproj", "{18CD7A7A-5E76-435B-9ABA-7F956CC6DAD4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "csuzw.Roadkill.TagHierarchyMenu", "csuzw.Roadkill.TagHierarchyMenu\csuzw.Roadkill.TagHierarchyMenu.csproj", "{CFE53481-5AF4-4AA4-8038-4ECB97DF9214}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "csuzw.Roadkill.TagTreeMenu", "csuzw.Roadkill.TagTreeMenu\csuzw.Roadkill.TagTreeMenu.csproj", "{CFE53481-5AF4-4AA4-8038-4ECB97DF9214}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{32BCF35A-D976-4E2E-96D2-C75C8215C52D}"
+	ProjectSection(SolutionItems) = preProject
+		..\lib\Mindscape.LightSpeed.dll = ..\lib\Mindscape.LightSpeed.dll
+		..\lib\Roadkill.Core.dll = ..\lib\Roadkill.Core.dll
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{32BE40F2-9C0F-4B37-87F1-BE0180371290}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{82484CBC-E5D0-437A-A0DC-7CE218868F9B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "csuzw.Roadkill.Core", "csuzw.Roadkill.Core\csuzw.Roadkill.Core.csproj", "{CEE2A68A-3499-47F7-B67D-6A701A690A57}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +39,10 @@ Global
 		{CFE53481-5AF4-4AA4-8038-4ECB97DF9214}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CFE53481-5AF4-4AA4-8038-4ECB97DF9214}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CFE53481-5AF4-4AA4-8038-4ECB97DF9214}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CEE2A68A-3499-47F7-B67D-6A701A690A57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEE2A68A-3499-47F7-B67D-6A701A690A57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEE2A68A-3499-47F7-B67D-6A701A690A57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEE2A68A-3499-47F7-B67D-6A701A690A57}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -41,5 +51,6 @@ Global
 		{D6D6ECF5-8481-48DE-8805-246316DB2F5A} = {32BE40F2-9C0F-4B37-87F1-BE0180371290}
 		{18CD7A7A-5E76-435B-9ABA-7F956CC6DAD4} = {82484CBC-E5D0-437A-A0DC-7CE218868F9B}
 		{CFE53481-5AF4-4AA4-8038-4ECB97DF9214} = {32BE40F2-9C0F-4B37-87F1-BE0180371290}
+		{CEE2A68A-3499-47F7-B67D-6A701A690A57} = {32BE40F2-9C0F-4B37-87F1-BE0180371290}
 	EndGlobalSection
 EndGlobal

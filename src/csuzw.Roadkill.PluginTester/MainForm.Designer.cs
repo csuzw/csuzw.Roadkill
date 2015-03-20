@@ -28,12 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.scoMain = new System.Windows.Forms.SplitContainer();
+            this.cbxPlugins = new System.Windows.Forms.ComboBox();
             this.btnRun = new System.Windows.Forms.Button();
             this.txtInput = new System.Windows.Forms.TextBox();
             this.txtOutput = new System.Windows.Forms.TextBox();
-            this.cbxPlugins = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.scoMain)).BeginInit();
             this.scoMain.Panel1.SuspendLayout();
             this.scoMain.Panel2.SuspendLayout();
@@ -60,6 +59,16 @@
             this.scoMain.SplitterDistance = 224;
             this.scoMain.TabIndex = 0;
             // 
+            // cbxPlugins
+            // 
+            this.cbxPlugins.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbxPlugins.FormattingEnabled = true;
+            this.cbxPlugins.Location = new System.Drawing.Point(12, 12);
+            this.cbxPlugins.Name = "cbxPlugins";
+            this.cbxPlugins.Size = new System.Drawing.Size(771, 21);
+            this.cbxPlugins.TabIndex = 2;
+            this.cbxPlugins.SelectedIndexChanged += new System.EventHandler(this.cbxPlugins_SelectedIndexChanged);
+            // 
             // btnRun
             // 
             this.btnRun.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
@@ -83,7 +92,6 @@
             this.txtInput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtInput.Size = new System.Drawing.Size(771, 144);
             this.txtInput.TabIndex = 0;
-            this.txtInput.Text = resources.GetString("txtInput.Text");
             // 
             // txtOutput
             // 
@@ -97,15 +105,6 @@
             this.txtOutput.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.txtOutput.Size = new System.Drawing.Size(771, 229);
             this.txtOutput.TabIndex = 1;
-            // 
-            // cbxPlugins
-            // 
-            this.cbxPlugins.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cbxPlugins.FormattingEnabled = true;
-            this.cbxPlugins.Location = new System.Drawing.Point(12, 12);
-            this.cbxPlugins.Name = "cbxPlugins";
-            this.cbxPlugins.Size = new System.Drawing.Size(771, 21);
-            this.cbxPlugins.TabIndex = 2;
             // 
             // MainForm
             // 

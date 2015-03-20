@@ -4,10 +4,11 @@ using System.Text.RegularExpressions;
 using System.Web;
 using Roadkill.Core.Plugins;
 using System;
+using csuzw.Roadkill.Core;
 
 namespace csuzw.Roadkill.GitHubExtensions
 {
-    public class GitHubExtensions : TextPlugin
+    public class GitHubExtensions : TextPlugin, ITextPlugin, IHaveSampleInput
     {
         private static readonly Regex PreProcessorRegex = new Regex(@"
             (?:(?<content>[\s|\S]*?)
@@ -49,6 +50,8 @@ namespace csuzw.Roadkill.GitHubExtensions
         private static readonly Regex StrikethroughRegex = new Regex(@"(~{2}) (?=\S) (.+?) (?<=\S) \1",
             RegexOptions.IgnorePatternWhitespace | RegexOptions.Singleline | RegexOptions.Compiled);
 
+        #region Properties
+
         public override string Id
         {
             get { return "GitHubExtensions"; }
@@ -68,6 +71,29 @@ namespace csuzw.Roadkill.GitHubExtensions
         {
             get { return "1.0"; }
         }
+
+        public string SampleInput
+        {
+            get { return @"## Table
+
+Some text
+
+<code>Some other text
+
+```csharp
+someshit
+```</code>
+
+More text with some <code>~~code~~</code>. You get ~~the~~ picture.
+
+```javascript
+Transform this shit!
+```
+
+## Bongos"; }
+        }
+
+        #endregion
 
         public override string BeforeParse(string markupText)
         {

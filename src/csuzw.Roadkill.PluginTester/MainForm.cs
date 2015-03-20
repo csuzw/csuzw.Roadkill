@@ -1,8 +1,8 @@
-﻿using Roadkill.Core.Plugins;
+﻿using csuzw.Roadkill.Core;
+using Roadkill.Core.Configuration;
+using Roadkill.Core.DI;
+using Roadkill.Core.Services;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -14,7 +14,12 @@ namespace csuzw.Roadkill.PluginTester
         {
             InitializeComponent();
 
-            cbxPlugins.DataSource = GetPlugins();
+            InitializeRoadkill();
+
+            ServiceLocator.RegisterType<ITextPlugin>(new GitHubExtensions.GitHubExtensions());
+            ServiceLocator.RegisterType<ITextPlugin>(new TagTreeMenu.TagTreeMenu(ServiceLocator.GetInstance<IPageService>()));
+
+            cbxPlugins.DataSource = ServiceLocator.GetAllInstances<ITextPlugin>();
         }
 
         private void btnRun_Click(object sender, EventArgs e)
@@ -24,7 +29,7 @@ namespace csuzw.Roadkill.PluginTester
 
             try
             {
-                var plugin = (TextPlugin)Activator.CreateInstance((Type)cbxPlugins.SelectedItem);
+                var plugin = (ITextPlugin)cbxPlugins.SelectedItem;
 
                 input = plugin.BeforeParse(input);
                 input = plugin.AfterParse(input);
@@ -37,34 +42,33 @@ namespace csuzw.Roadkill.PluginTester
             }
         }
 
-        private IList<Type> GetPlugins()
+        private void InitializeRoadkill()
         {
-            var assemblies = GetAssemblies();
+            // Get the settings from the web.config
+            var configReader = GetConfigReader(AppDomain.CurrentDomain.SetupInformation.ConfigurationFile);
+            var applicationSettings = configReader.GetApplicationSettings();
 
-            var types = GetAssemblies().SelectMany(a => {
-                try
-                {
-                    return a.GetTypes().Where(t => t.IsSubclassOf(typeof(TextPlugin)));
-                }
-                catch
-                {
-                    return new Type[] { };
-                }
-            });
-
-            return types.ToList();
+            // Configure StructureMap dependencies
+            var iocSetup = new DependencyManager(applicationSettings);
+            iocSetup.Configure();
         }
 
-        private IEnumerable<Assembly> GetAssemblies()
+        private ConfigReaderWriter GetConfigReader(string configPath)
         {
-            var loadedAssemblies = AppDomain.CurrentDomain.GetAssemblies().ToList();
-            var loadedPaths = loadedAssemblies.Select(a => a.Location).ToArray();
+            ConstructorInfo ctor = typeof(FullTrustConfigReaderWriter).GetConstructors(BindingFlags.Instance | BindingFlags.NonPublic)[0];
 
-            var referencedPaths = Directory.GetFiles(AppDomain.CurrentDomain.BaseDirectory, "*.dll");
-            var toLoad = referencedPaths.Where(r => !loadedPaths.Contains(r, StringComparer.InvariantCultureIgnoreCase)).ToList();
-            toLoad.ForEach(path => loadedAssemblies.Add(AppDomain.CurrentDomain.Load(AssemblyName.GetAssemblyName(path))));
+            var configReader = (FullTrustConfigReaderWriter)ctor.Invoke(new object[] { configPath });
 
-            return loadedAssemblies;
+            return configReader;
+        }
+
+        private void cbxPlugins_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var plugin = cbxPlugins.SelectedItem as IHaveSampleInput;
+            if (plugin != null)
+            {
+                txtInput.Text = plugin.SampleInput;
+            }
         }
     }
 }

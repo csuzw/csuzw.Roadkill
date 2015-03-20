@@ -117,23 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="txtInput.Text" xml:space="preserve">
-    <value>## Table
-
-Some text
-
-&lt;code&gt;Some other text
-
-```csharp
-someshit
-```&lt;/code&gt;
-
-More text with some &lt;code&gt;~~code~~&lt;/code&gt;. You get ~~the~~ picture.
-
-```javascript
-Transform this shit!
-```
-
-## Bongos</value>
-  </data>
 </root>
