@@ -1,6 +1,6 @@
 # csuzw.Roadkill
 
-Solution for my [Roadkill wiki](http://www.roadkillwiki.net/) extensions
+My [Roadkill wiki](http://www.roadkillwiki.net/) plugins
 
 ## GithubExtensions
 
