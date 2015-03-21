@@ -32,10 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="Roadkill.Core">
       <HintPath>..\..\lib\Roadkill.Core.dll</HintPath>
     </Reference>
@@ -48,12 +44,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="StateMachine\Command.cs" />
+    <Compile Include="StateMachine\Enumerations.cs" />
+    <Compile Include="StateMachine\State.cs" />
+    <Compile Include="StateMachine\Transition.cs" />
+    <Compile Include="StateMachine\Extensions.cs" />
+    <Compile Include="PageMetaData.cs" />
+    <Compile Include="PageMetaDataProvider.cs" />
+    <Compile Include="Tag.cs" />
+    <Compile Include="TagKey.cs" />
+    <Compile Include="TagTree.cs" />
     <Compile Include="TagTreeMenu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StateMachine\TagTreeStateMachine.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\csuzw.Roadkill.Core\csuzw.Roadkill.Core.csproj">

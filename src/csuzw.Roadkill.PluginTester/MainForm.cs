@@ -1,7 +1,7 @@
 ﻿using csuzw.Roadkill.Core;
 using Roadkill.Core.Configuration;
+using Roadkill.Core.Database;
 using Roadkill.Core.DI;
-using Roadkill.Core.Services;
 using System;
 using System.Reflection;
 using System.Windows.Forms;
@@ -17,7 +17,7 @@ namespace csuzw.Roadkill.PluginTester
             InitializeRoadkill();
 
             ServiceLocator.RegisterType<ITextPlugin>(new GitHubExtensions.GitHubExtensions());
-            ServiceLocator.RegisterType<ITextPlugin>(new TagTreeMenu.TagTreeMenu(ServiceLocator.GetInstance<IPageService>()));
+            ServiceLocator.RegisterType<ITextPlugin>(new TagTreeMenu.TagTreeMenu(ServiceLocator.GetInstance<IRepository>()));
 
             cbxPlugins.DataSource = ServiceLocator.GetAllInstances<ITextPlugin>();
         }

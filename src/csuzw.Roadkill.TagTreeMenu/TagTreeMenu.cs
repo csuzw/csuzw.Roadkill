@@ -1,10 +1,8 @@
 ﻿using csuzw.Roadkill.Core;
-using Newtonsoft.Json;
-using Roadkill.Core.Mvc.ViewModels;
+using csuzw.Roadkill.TagTreeMenu.StateMachine;
+using Roadkill.Core.Database;
 using Roadkill.Core.Plugins;
-using Roadkill.Core.Services;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -15,7 +13,7 @@ namespace csuzw.Roadkill.TagTreeMenu
     {
         private static readonly Regex _regex = new Regex(@"\[\[\[ttm=(?'inner'.*?)\]\]\]", RegexOptions.Singleline | RegexOptions.Compiled);
 
-        private readonly IPageService _pageService;
+        private readonly IRepository _repository;
 
         #region Properties
 
@@ -31,7 +29,7 @@ namespace csuzw.Roadkill.TagTreeMenu
 
         public override string Description
         {
-            get { return "Creates simple menu pages based on provided tag tree.  Usage: [[[ttm={ your json here }]]]"; }
+            get { return "Creates simple menu pages based on provided tag tree.  Usage: [[[ttm=Tag1(Tag2&Tag4(Tag3),Tag4(Tag5|Tag6))]]]"; }
         }
 
         public override string Version
@@ -41,85 +39,70 @@ namespace csuzw.Roadkill.TagTreeMenu
 
         public string SampleInput
         {
-            get { return "[[[ttm={\"One\":{\"Two\":{\"Four\":{}},\"Three\":{\"Five\":{},\"Six\":{}}}}]]]"; }
+            get { return "[[[ttm=One(Two(Four),Three(Five|Six))]]]"; }
         }
 
         #endregion
 
-        public TagTreeMenu(IPageService pageService)
+        public TagTreeMenu(IRepository repository)
         {
-            _pageService = pageService;
+            _repository = repository;
         }
 
         public override string BeforeParse(string markupText)
         {
-            markupText = _regex.Replace(markupText, GetMenuText);
+            var pageProvider = new PageMetaDataProvider(_repository);
+            markupText = _regex.Replace(markupText, m => GetMenuText(m, pageProvider));
 
             return markupText;
         }
 
-        private string GetMenuText(Match match)
+        private string GetMenuText(Match match, PageMetaDataProvider pageProvider)
         {
-            string error;
-            var tagTree = GetTagTree(match, out error);
-            if (tagTree == null) return error;
-
-            var menuText = GetMenuText(tagTree);
-
-            return menuText;
-        }
-
-        private string GetMenuText(TagTree tagTree, ICollection<PageViewModel> pages = null, int depth = 0)
-        {
-            string indent = new String(' ', depth * 4);
-            depth += 1;
-            StringBuilder stringBuilder = new StringBuilder();
-            foreach (var tag in tagTree)
-            {
-                var matchingPages = GetMatchingPages(tag.Key, pages);
-                string childText = (tag.Value != null) ? GetMenuText(tag.Value, matchingPages, depth) : "";
-                stringBuilder.AppendFormat(@"{0}* **{1}**", indent, tag.Key).AppendLine();
-                foreach (var matchingPage in matchingPages)
-                {
-                    stringBuilder.AppendFormat(@"{0}  * [{1}]({2})", indent, matchingPage.Title, matchingPage.EncodedTitle).AppendLine();
-                }
-                if (!string.IsNullOrWhiteSpace(childText)) stringBuilder.AppendLine(childText);
-            }
-            return stringBuilder.ToString();
-        }
-
-        private ICollection<PageViewModel> GetMatchingPages(string tag, ICollection<PageViewModel> pages = null)
-        {
-            if (pages == null) return _pageService.FindByTag(tag).OrderBy(p => p.Title).ToList();
-
-            return pages.Where(p => p.Tags.Any(t => t.ToLower() == tag.ToLower())).ToList();
-        }
-
-        private TagTree GetTagTree(Match match, out string error)
-        {
-            error = string.Empty;
+            TagTree tagTree;
             try
             {
-                return JsonConvert.DeserializeObject<TagTree>(match.Groups["inner"].Value);
+                tagTree = match.Groups["inner"].Value.ToTagTree();
             }
             catch (Exception ex)
             {
-                error = ex.Message;
-                return null;
+                return ex.Message;
             }
+            var createMenuHeaders = tagTree.Keys.Count > 1;
+            var stringBuilder = new StringBuilder();
+            foreach (var root in tagTree)
+            {
+                var menuText = GetMenuText(pageProvider, root.Value, 0, root.Key);
+                if (createMenuHeaders) stringBuilder.AppendFormat("## {0}", root.Key.Description).AppendLine();
+                stringBuilder.AppendLine(menuText);
+            }
+
+            return stringBuilder.ToString();
         }
 
-        private class TagTree : Dictionary<string, TagTree>
+        private string GetMenuText(PageMetaDataProvider pageProvider, TagTree tagTree, int depth = 0, params TagKey[] rootTags)
         {
-            public TagTree() {}
+            string indent = new String(' ', depth * 4);
+            depth += 1;
 
-            public TagTree(params string[] tags) : this()
+            StringBuilder stringBuilder = new StringBuilder();
+
+            var pages = pageProvider.GetPages(rootTags);
+            if (pages != null)
             {
-                foreach (var tag in tags)
+                foreach (var page in pages)
                 {
-                    Add(tag, null);
+                    stringBuilder.AppendFormat(@"{0}* [{1}]({2})", indent, page.Name, page.EncodedName).AppendLine();
                 }
             }
+            if (tagTree == null) return stringBuilder.ToString();
+            foreach (var tag in tagTree)
+            {
+                stringBuilder.AppendFormat(@"{0}    * **{1}**", indent, tag.Key.Description).AppendLine();
+                stringBuilder.Append(GetMenuText(pageProvider, tag.Value, depth, rootTags.Concat(new [] { tag.Key }).ToArray()));
+            }
+
+            return stringBuilder.ToString();
         }
     }
 }
