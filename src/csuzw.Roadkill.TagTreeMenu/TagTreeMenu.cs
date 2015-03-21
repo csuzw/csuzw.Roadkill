@@ -1,9 +1,12 @@
 ﻿using csuzw.Roadkill.Core;
 using Newtonsoft.Json;
+using Roadkill.Core.Mvc.ViewModels;
 using Roadkill.Core.Plugins;
 using Roadkill.Core.Services;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace csuzw.Roadkill.TagTreeMenu
@@ -38,7 +41,7 @@ namespace csuzw.Roadkill.TagTreeMenu
 
         public string SampleInput
         {
-            get { return "[[[ttm={\"Root\":{\"Child1\":{},\"Child2\":{}}}]]]"; }
+            get { return "[[[ttm={\"One\":{\"Two\":{\"Four\":{}},\"Three\":{\"Five\":{},\"Six\":{}}}}]]]"; }
         }
 
         #endregion
@@ -61,7 +64,35 @@ namespace csuzw.Roadkill.TagTreeMenu
             var tagTree = GetTagTree(match, out error);
             if (tagTree == null) return error;
 
-            return "success";
+            var menuText = GetMenuText(tagTree);
+
+            return menuText;
+        }
+
+        private string GetMenuText(TagTree tagTree, ICollection<PageViewModel> pages = null, int depth = 0)
+        {
+            string indent = new String(' ', depth * 4);
+            depth += 1;
+            StringBuilder stringBuilder = new StringBuilder();
+            foreach (var tag in tagTree)
+            {
+                var matchingPages = GetMatchingPages(tag.Key, pages);
+                string childText = (tag.Value != null) ? GetMenuText(tag.Value, matchingPages, depth) : "";
+                stringBuilder.AppendFormat(@"{0}* **{1}**", indent, tag.Key).AppendLine();
+                foreach (var matchingPage in matchingPages)
+                {
+                    stringBuilder.AppendFormat(@"{0}  * [{1}]({2})", indent, matchingPage.Title, matchingPage.EncodedTitle).AppendLine();
+                }
+                if (!string.IsNullOrWhiteSpace(childText)) stringBuilder.AppendLine(childText);
+            }
+            return stringBuilder.ToString();
+        }
+
+        private ICollection<PageViewModel> GetMatchingPages(string tag, ICollection<PageViewModel> pages = null)
+        {
+            if (pages == null) return _pageService.FindByTag(tag).OrderBy(p => p.Title).ToList();
+
+            return pages.Where(p => p.Tags.Any(t => t.ToLower() == tag.ToLower())).ToList();
         }
 
         private TagTree GetTagTree(Match match, out string error)
