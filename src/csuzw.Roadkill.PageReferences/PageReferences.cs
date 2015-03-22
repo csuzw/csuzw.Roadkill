@@ -26,7 +26,7 @@ namespace csuzw.Roadkill.PageReferences
 
         public override string Description
         {
-            get { return "Generates links for all pages that reference current page.  Usage: {PageReference=Test-Page}"; }
+            get { return "Generates links for all pages that reference current page.  Usage: {PageReference=Example-Page}"; }
         }
 
         public override string Version
