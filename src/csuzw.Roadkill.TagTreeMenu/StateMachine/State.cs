@@ -19,17 +19,7 @@ namespace csuzw.Roadkill.TagTreeMenu.StateMachine
 
         public void AddInProgressToTree()
         {
-            if (InProgressKey != null)
-            {
-                if (InProgressValue != null)
-                {
-                    TagTree.Add(InProgressKey, InProgressValue.TagTree);
-                }
-                else
-                {
-                    TagTree.Add(InProgressKey, null);
-                }
-            }
+            if (InProgressKey != null) TagTree.Add(InProgressKey, (InProgressValue != null) ? InProgressValue.TagTree : null);
             InProgressKey = null;
             InProgressValue = null;
         }
