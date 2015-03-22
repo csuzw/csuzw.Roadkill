@@ -11,7 +11,7 @@ namespace csuzw.Roadkill.TagTreeMenu
 {
     public class TagTreeMenu : TextPlugin, ITextPlugin, IHaveSampleInput
     {
-        private static readonly Regex _regex = new Regex(@"\[\[\[ttm=(?'inner'.*?)\]\]\]", RegexOptions.Singleline | RegexOptions.Compiled);
+        private static readonly Regex _regex = new Regex(@"(?<!\{)\{ttm=(?<inner>[\w()!,&|]*?)\}(?!\})", RegexOptions.Singleline | RegexOptions.Compiled);
 
         private readonly IRepository _repository;
 
@@ -29,7 +29,7 @@ namespace csuzw.Roadkill.TagTreeMenu
 
         public override string Description
         {
-            get { return "Creates simple menu pages based on provided tag tree.  Usage: [[[ttm=Tag1!Test(Tag2&Tag4(Tag3),Tag4(Tag5|Tag6))]]]"; }
+            get { return "Creates simple menu pages based on provided tag tree.  Usage: {ttm=Tag1!Test(Tag2&Tag4(Tag3),Tag4(Tag5|Tag6))}"; }
         }
 
         public override string Version
@@ -39,7 +39,7 @@ namespace csuzw.Roadkill.TagTreeMenu
 
         public string SampleInput
         {
-            get { return "[[[ttm=One!Test(Two(Four),Three(Five|Six))]]]"; }
+            get { return "{ttm=One!Test(Two(Four),Three(Five|Six))}"; }
         }
 
         #endregion

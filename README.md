@@ -10,7 +10,7 @@ Adds Code Blocks (uses built in Syntax Highlighting plugin for styling), Tables 
 
 ## TagTreeMenu
 
-Creates simple menu pages based on provided tag tree.  Usage: `[[[ttm=Tag1!Tag7(Tag2&Tag4(Tag3),Tag4(Tag5|Tag6))]]]`
+Creates simple menu pages based on provided tag tree.  Usage: `{ttm=Tag1!Tag7(Tag2&Tag4(Tag3),Tag4(Tag5|Tag6))}`
 
 Valid symbols are `(` (open sub group), `)` (close sub group), `&` (logical AND), `|` (logical OR), `!` (null: ignored for all cases but contributes to full match), `,` (new branch) and tag names.  White space is ignored.  
 
