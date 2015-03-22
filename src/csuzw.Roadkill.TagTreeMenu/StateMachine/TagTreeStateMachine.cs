@@ -20,6 +20,7 @@ namespace csuzw.Roadkill.TagTreeMenu.StateMachine
             _transitions.Add(new Transition(StateType.KeyInProgress, CommandType.Down), TransitionDown);
             _transitions.Add(new Transition(StateType.KeyInProgress, CommandType.TagOr), TransitionTagOr);
             _transitions.Add(new Transition(StateType.KeyInProgress, CommandType.TagAnd), TransitionTagAnd);
+            _transitions.Add(new Transition(StateType.KeyInProgress, CommandType.TagNull), TransitionTagNull);
             _transitions.Add(new Transition(StateType.KeyInProgress, CommandType.TagNext), TransitionKeyInProgressTagNext);
             _transitions.Add(new Transition(StateType.End, CommandType.TagNext), TransitionEndTagNext);
             _transitions.Add(new Transition(StateType.End, CommandType.Down), TransitionDown);
@@ -82,6 +83,11 @@ namespace csuzw.Roadkill.TagTreeMenu.StateMachine
         private void TransitionTagOr(Command command)
         {
             TransitionTagOperator(command, TagOperator.Or);
+        }
+
+        private void TransitionTagNull(Command command)
+        {
+            TransitionTagOperator(command, TagOperator.Null);
         }
 
         private void TransitionTagOperator(Command command, TagOperator tagOperator)

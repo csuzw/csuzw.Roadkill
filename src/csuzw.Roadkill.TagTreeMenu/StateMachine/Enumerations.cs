@@ -13,6 +13,7 @@ namespace csuzw.Roadkill.TagTreeMenu.StateMachine
         TagNone,
         TagAnd,
         TagOr,
+        TagNull,
         TagNext,
         Up,
         Down

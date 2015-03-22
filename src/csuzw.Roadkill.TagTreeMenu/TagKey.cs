@@ -7,7 +7,7 @@ namespace csuzw.Roadkill.TagTreeMenu
     {
         public ICollection<Tag> Tags { get; private set; }
 
-        public string Description { get { return string.Join(", ", Tags.Select(t => t.Description)); } }
+        public string Description { get { return string.Join(", ", Tags.Where(t => t.Operator != TagOperator.Null).Select(t => t.Description)); } }
 
         public TagKey(params Tag[] tags)
         {
@@ -19,13 +19,18 @@ namespace csuzw.Roadkill.TagTreeMenu
             var isMatch = false;
             foreach (var tag in Tags)
             {
-                if (tag.Operator == TagOperator.And)
+                switch (tag.Operator)
                 {
-                    isMatch &= tags.Contains(tag.Name);
-                }
-                else
-                {
-                    isMatch |= tags.Contains(tag.Name);
+                    case TagOperator.And:
+                        isMatch &= tags.Contains(tag.Name);
+                        break;
+                    case TagOperator.Or:
+                    case TagOperator.None:
+                        isMatch |= tags.Contains(tag.Name);
+                        break;
+                    case TagOperator.Null:
+                    default:
+                        break;
                 }
             }
             return isMatch;

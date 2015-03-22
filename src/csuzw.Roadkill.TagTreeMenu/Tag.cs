@@ -5,7 +5,8 @@ namespace csuzw.Roadkill.TagTreeMenu
     {
         None,
         And,
-        Or
+        Or,
+        Null
     }
 
     internal class Tag
