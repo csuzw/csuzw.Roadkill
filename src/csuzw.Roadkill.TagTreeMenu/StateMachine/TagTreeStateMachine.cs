@@ -10,7 +10,14 @@ namespace csuzw.Roadkill.TagTreeMenu.StateMachine
 
         private State _currentState = new State(StateType.Start);
 
-        public TagTree TagTree { get { return _currentState.TagTree; } }
+        public TagTree TagTree
+        {
+            get
+            {
+                FinalizeTagTree(); // requires because tags don't need to be terminated
+                return _currentState.TagTree;
+            }
+        }
 
         public TagTreeStateMachine()
         {
@@ -35,7 +42,7 @@ namespace csuzw.Roadkill.TagTreeMenu.StateMachine
             _transitions[transition](command);
         }
 
-        public void FinalizeTagTree()
+        private void FinalizeTagTree()
         {
             if (_isFinalized) return;
             _currentState.AddInProgressToTree();

@@ -23,7 +23,6 @@ namespace csuzw.Roadkill.TagTreeMenu.StateMachine
             {
                 if (InProgressValue != null)
                 {
-                    InProgressValue.FinalizeTagTree();
                     TagTree.Add(InProgressKey, InProgressValue.TagTree);
                 }
                 else
