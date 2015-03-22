@@ -77,6 +77,7 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.0.0\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
+    <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.0.0\lib\net45\System.Web.Helpers.dll</HintPath>
@@ -161,13 +162,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\csuzw.Roadkill.Core\csuzw.Roadkill.Core.csproj">
-      <Project>{cee2a68a-3499-47f7-b67d-6a701a690a57}</Project>
-      <Name>csuzw.Roadkill.Core</Name>
-    </ProjectReference>
     <ProjectReference Include="..\csuzw.Roadkill.GitHubExtensions\csuzw.Roadkill.GitHubExtensions.csproj">
       <Project>{d6d6ecf5-8481-48de-8805-246316db2f5a}</Project>
       <Name>csuzw.Roadkill.GitHubExtensions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\csuzw.Roadkill.PageReferences\csuzw.Roadkill.PageReferences.csproj">
+      <Project>{469a8519-ed8f-4e73-bfbd-b86709a12e52}</Project>
+      <Name>csuzw.Roadkill.PageReferences</Name>
     </ProjectReference>
     <ProjectReference Include="..\csuzw.Roadkill.TagTreeMenu\csuzw.Roadkill.TagTreeMenu.csproj">
       <Project>{cfe53481-5af4-4aa4-8038-4ecb97df9214}</Project>

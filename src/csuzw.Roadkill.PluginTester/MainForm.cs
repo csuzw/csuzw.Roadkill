@@ -1,8 +1,10 @@
-﻿using csuzw.Roadkill.Core;
-using Roadkill.Core.Configuration;
+﻿using Roadkill.Core.Configuration;
 using Roadkill.Core.Database;
 using Roadkill.Core.DI;
+using Roadkill.Core.Plugins;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -10,16 +12,20 @@ namespace csuzw.Roadkill.PluginTester
 {
     public partial class MainForm : Form
     {
+        private readonly Dictionary<TextPlugin, string> _plugins = new Dictionary<TextPlugin, string>();
+
         public MainForm()
         {
             InitializeComponent();
 
             InitializeRoadkill();
 
-            ServiceLocator.RegisterType<ITextPlugin>(new GitHubExtensions.GitHubExtensions());
-            ServiceLocator.RegisterType<ITextPlugin>(new TagTreeMenu.TagTreeMenu(ServiceLocator.GetInstance<IRepository>()));
+            _plugins.Add(new PageReferences.PageReferences(ServiceLocator.GetInstance<IRepository>()), SampleInput.PageReferences);
+            _plugins.Add(new GitHubExtensions.GitHubExtensions(), SampleInput.GitHubExtensions);
+            _plugins.Add(new TagTreeMenu.TagTreeMenu(ServiceLocator.GetInstance<IRepository>()), SampleInput.TagTreeMenu);
 
-            cbxPlugins.DataSource = ServiceLocator.GetAllInstances<ITextPlugin>();
+            cbxPlugins.DataSource = _plugins.Keys.ToList();
+            cbxPlugins.DisplayMember = "Name";
         }
 
         private void btnRun_Click(object sender, EventArgs e)
@@ -29,7 +35,7 @@ namespace csuzw.Roadkill.PluginTester
 
             try
             {
-                var plugin = (ITextPlugin)cbxPlugins.SelectedItem;
+                var plugin = (TextPlugin)cbxPlugins.SelectedItem;
 
                 input = plugin.BeforeParse(input);
                 input = plugin.AfterParse(input);
@@ -64,11 +70,40 @@ namespace csuzw.Roadkill.PluginTester
 
         private void cbxPlugins_SelectedIndexChanged(object sender, EventArgs e)
         {
-            var plugin = cbxPlugins.SelectedItem as IHaveSampleInput;
+            var plugin = cbxPlugins.SelectedItem as TextPlugin;
             if (plugin != null)
             {
-                txtInput.Text = plugin.SampleInput;
+                txtInput.Text = _plugins[plugin];
             }
         }
+
+        #region Sample Input Constants
+
+        private static class SampleInput
+        {
+            public const string GitHubExtensions = @"## Table
+
+Some text
+
+<code>Some other text
+
+```csharp
+someshit
+```</code>
+
+More text with some <code>~~code~~</code>. You get ~~the~~ picture.
+
+```javascript
+Transform this shit!
+```
+
+## Bongos";
+
+            public const string TagTreeMenu = @"{ttm=One!Test(Two(Four),Three(Five|Six))}";
+
+            public const string PageReferences = @"{PageReferences=Foo}";
+        }
+
+        #endregion
     }
 }
