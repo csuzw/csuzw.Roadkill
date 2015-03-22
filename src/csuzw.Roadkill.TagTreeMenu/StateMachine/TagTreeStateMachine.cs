@@ -45,6 +45,7 @@ namespace csuzw.Roadkill.TagTreeMenu.StateMachine
         private void FinalizeTagTree()
         {
             if (_isFinalized) return;
+            if (_currentState.Depth > 0) throw new Exception("TagTree is not in finalizable state");
             _currentState.AddInProgressToTree();
             _isFinalized = true;
         }

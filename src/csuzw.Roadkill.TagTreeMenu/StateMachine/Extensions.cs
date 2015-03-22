@@ -19,13 +19,26 @@ namespace csuzw.Roadkill.TagTreeMenu.StateMachine
             return stateMachine.TagTree;
         }
 
-        public static IEnumerable<Command> ToCommands(this string definition)
+        public static IEnumerable<string> ToTokens(this string definition)
         {
             var tokens = _tokenizer
                 .Split(definition)
                 .Where(t => !string.IsNullOrWhiteSpace(t));
 
-            var commands = tokens
+            return tokens;
+        }
+
+        public static IEnumerable<Command> ToCommands(this IEnumerable<string> tokens)
+        {
+            var commands = tokens.Select(t => t.ToCommand());
+
+            return commands;
+        }
+
+        public static IEnumerable<Command> ToCommands(this string definition)
+        {
+            var commands = definition
+                .ToTokens()
                 .Select(t => t.ToCommand());
 
             return commands;
@@ -33,13 +46,7 @@ namespace csuzw.Roadkill.TagTreeMenu.StateMachine
 
         public static Command ToCommand(this string token)
         {
-            if (token == @"(") return new Command(CommandType.Up);
-            if (token == @")") return new Command(CommandType.Down);
-            if (token.StartsWith(",")) return new Command(CommandType.TagNext, token.Substring(1));
-            if (token.StartsWith("!")) return new Command(CommandType.TagNull, token.Substring(1));
-            if (token.StartsWith("|")) return new Command(CommandType.TagOr, token.Substring(1));
-            if (token.StartsWith("&")) return new Command(CommandType.TagAnd, token.Substring(1));
-            return new Command(CommandType.TagNone, token);
+            return new Command(token);
         }
     }
 }
