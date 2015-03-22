@@ -1,5 +1,4 @@
-﻿using csuzw.Roadkill.Core;
-using csuzw.Roadkill.TagTreeMenu.StateMachine;
+﻿using csuzw.Roadkill.TagTreeMenu.StateMachine;
 using Roadkill.Core.Database;
 using Roadkill.Core.Plugins;
 using System;
@@ -9,9 +8,9 @@ using System.Text.RegularExpressions;
 
 namespace csuzw.Roadkill.TagTreeMenu
 {
-    public class TagTreeMenu : TextPlugin, ITextPlugin, IHaveSampleInput
+    public class TagTreeMenu : TextPlugin
     {
-        private static readonly Regex _regex = new Regex(@"(?<!\{)\{ttm=(?<inner>[\w()!,&|]*?)\}(?!\})", RegexOptions.Singleline | RegexOptions.Compiled);
+        private static readonly Regex _regex = new Regex(@"(?<!\{)\{ttm=(?<inner>[\w()!,&|]+?)\}(?!\})", RegexOptions.Singleline | RegexOptions.Compiled);
 
         private readonly IRepository _repository;
 
@@ -35,11 +34,6 @@ namespace csuzw.Roadkill.TagTreeMenu
         public override string Version
         {
             get { return "1.0"; }
-        }
-
-        public string SampleInput
-        {
-            get { return "{ttm=One!Test(Two(Four),Three(Five|Six))}"; }
         }
 
         #endregion

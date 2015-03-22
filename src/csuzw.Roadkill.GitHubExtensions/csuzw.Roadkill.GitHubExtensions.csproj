@@ -78,12 +78,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\csuzw.Roadkill.Core\csuzw.Roadkill.Core.csproj">
-      <Project>{cee2a68a-3499-47f7-b67d-6a701a690a57}</Project>
-      <Name>csuzw.Roadkill.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

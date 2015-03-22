@@ -19,14 +19,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Plugins", "Plugins", "{32BE
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{82484CBC-E5D0-437A-A0DC-7CE218868F9B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "csuzw.Roadkill.Core", "csuzw.Roadkill.Core\csuzw.Roadkill.Core.csproj", "{CEE2A68A-3499-47F7-B67D-6A701A690A57}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{769F63F0-952E-41D7-9B04-836295A7240D}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\NuGet.Config = .nuget\NuGet.Config
 		.nuget\NuGet.exe = .nuget\NuGet.exe
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "csuzw.Roadkill.PageReferences", "csuzw.Roadkill.PageReferences\csuzw.Roadkill.PageReferences.csproj", "{469A8519-ED8F-4E73-BFBD-B86709A12E52}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -46,10 +46,10 @@ Global
 		{CFE53481-5AF4-4AA4-8038-4ECB97DF9214}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CFE53481-5AF4-4AA4-8038-4ECB97DF9214}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CFE53481-5AF4-4AA4-8038-4ECB97DF9214}.Release|Any CPU.Build.0 = Release|Any CPU
-		{CEE2A68A-3499-47F7-B67D-6A701A690A57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CEE2A68A-3499-47F7-B67D-6A701A690A57}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CEE2A68A-3499-47F7-B67D-6A701A690A57}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CEE2A68A-3499-47F7-B67D-6A701A690A57}.Release|Any CPU.Build.0 = Release|Any CPU
+		{469A8519-ED8F-4E73-BFBD-B86709A12E52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{469A8519-ED8F-4E73-BFBD-B86709A12E52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{469A8519-ED8F-4E73-BFBD-B86709A12E52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{469A8519-ED8F-4E73-BFBD-B86709A12E52}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,6 +58,6 @@ Global
 		{D6D6ECF5-8481-48DE-8805-246316DB2F5A} = {32BE40F2-9C0F-4B37-87F1-BE0180371290}
 		{18CD7A7A-5E76-435B-9ABA-7F956CC6DAD4} = {82484CBC-E5D0-437A-A0DC-7CE218868F9B}
 		{CFE53481-5AF4-4AA4-8038-4ECB97DF9214} = {32BE40F2-9C0F-4B37-87F1-BE0180371290}
-		{CEE2A68A-3499-47F7-B67D-6A701A690A57} = {32BE40F2-9C0F-4B37-87F1-BE0180371290}
+		{469A8519-ED8F-4E73-BFBD-B86709A12E52} = {32BE40F2-9C0F-4B37-87F1-BE0180371290}
 	EndGlobalSection
 EndGlobal

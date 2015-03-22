@@ -4,11 +4,10 @@ using System.Text.RegularExpressions;
 using System.Web;
 using Roadkill.Core.Plugins;
 using System;
-using csuzw.Roadkill.Core;
 
 namespace csuzw.Roadkill.GitHubExtensions
 {
-    public class GitHubExtensions : TextPlugin, ITextPlugin, IHaveSampleInput
+    public class GitHubExtensions : TextPlugin
     {
         private static readonly Regex PreProcessorRegex = new Regex(@"
             (?:(?<content>[\s|\S]*?)
@@ -70,27 +69,6 @@ namespace csuzw.Roadkill.GitHubExtensions
         public override string Version
         {
             get { return "1.0"; }
-        }
-
-        public string SampleInput
-        {
-            get { return @"## Table
-
-Some text
-
-<code>Some other text
-
-```csharp
-someshit
-```</code>
-
-More text with some <code>~~code~~</code>. You get ~~the~~ picture.
-
-```javascript
-Transform this shit!
-```
-
-## Bongos"; }
         }
 
         #endregion

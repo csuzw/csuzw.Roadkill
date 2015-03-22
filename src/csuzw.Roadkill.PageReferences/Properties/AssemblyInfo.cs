@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("csuzw.Roadkill.Core")]
+[assembly: AssemblyTitle("csuzw.Roadkill.PageReferences")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("csuzw.Roadkill.Core")]
+[assembly: AssemblyProduct("csuzw.Roadkill.PageReferences")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("c57aeb48-2e5b-433e-8e37-06f057fe0a16")]
+[assembly: Guid("d71b534f-d8b9-4a26-9b52-a6698143d17c")]
 
 // Version information for an assembly consists of the following four values:
 //

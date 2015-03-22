@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CEE2A68A-3499-47F7-B67D-6A701A690A57}</ProjectGuid>
+    <ProjectGuid>{469A8519-ED8F-4E73-BFBD-B86709A12E52}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>csuzw.Roadkill.Core</RootNamespace>
-    <AssemblyName>csuzw.Roadkill.Core</AssemblyName>
+    <RootNamespace>csuzw.Roadkill.PageReferences</RootNamespace>
+    <AssemblyName>csuzw.Roadkill.PageReferences</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,6 +30,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Roadkill.Core">
+      <HintPath>..\..\lib\Roadkill.Core.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -39,8 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IHaveSampleInput.cs" />
-    <Compile Include="ITextPlugin.cs" />
+    <Compile Include="PageReferences.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
