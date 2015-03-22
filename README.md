@@ -24,6 +24,14 @@ The following would not match the page:
 * `Alpha|Delta`: `Beta` and `Gamma` aren't matched
 * `Alpha,Beta(Gamma)`: `Alpha` is in a different branch to `Beta` and `Gamma` so there is no complete match
 
+## PageReferences
+
+Generates links for all pages that reference current page.  Usage: `{PageReference=Example-Page}`
+
+Note that this currently only searches pages for links in the form `[Any Description](Example-Page)`.  One of the consequences of this is that pages that use plugins that generate links like TagTreeMenu won't be found.
+
+I have no idea how performant this is on larger wiki's either!
+
 ## PluginTester
 
 Simple Windows forms application for testing plugins.

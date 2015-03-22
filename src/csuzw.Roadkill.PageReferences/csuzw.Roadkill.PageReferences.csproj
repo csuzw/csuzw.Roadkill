@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="PageModel.cs" />
     <Compile Include="PageReferences.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -1,5 +1,7 @@
 ﻿using Roadkill.Core.Database;
 using Roadkill.Core.Plugins;
+using Roadkill.Core.Services;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace csuzw.Roadkill.PageReferences
@@ -24,7 +26,7 @@ namespace csuzw.Roadkill.PageReferences
 
         public override string Description
         {
-            get { return "Creates footer links for all pages that reference current page.  Usage: {PageReference=Test-Page}"; }
+            get { return "Generates links for all pages that reference current page.  Usage: {PageReference=Test-Page}"; }
         }
 
         public override string Version
@@ -48,10 +50,12 @@ namespace csuzw.Roadkill.PageReferences
 
         private string GetPageReferences(Match match)
         {
-            // TODO get current page name/encoded name
-
-            // TODO run regex against all current pages (performance!!!)
-            return "Hello Rob!";
+            var pageName = match.Groups["page"].Value;
+            var searchTerm = string.Format("]({0})", pageName);
+            // SearchService might be more performant but the results it gives are bullshit!
+            var pages = _repository.AllPages().Select(p => new PageModel(p, _repository)).Where(p => p.EncodedName != pageName && p.Content.Contains(searchTerm));
+            var text = string.Join(" | ", pages.Select(p => string.Format("[{0}]({1})", p.Name, p.EncodedName)));
+            return text;
         }
     }
 }

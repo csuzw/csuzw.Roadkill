@@ -2,6 +2,7 @@
 using Roadkill.Core.Database;
 using Roadkill.Core.DI;
 using Roadkill.Core.Plugins;
+using Roadkill.Core.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
