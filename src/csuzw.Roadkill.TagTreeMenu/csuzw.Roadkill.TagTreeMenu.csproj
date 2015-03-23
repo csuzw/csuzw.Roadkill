@@ -52,6 +52,7 @@
     <Compile Include="PageMetaData.cs" />
     <Compile Include="PageMetaDataProvider.cs" />
     <Compile Include="Tag.cs" />
+    <Compile Include="TagComparer.cs" />
     <Compile Include="TagKey.cs" />
     <Compile Include="TagTree.cs" />
     <Compile Include="TagTreeMenu.cs" />
