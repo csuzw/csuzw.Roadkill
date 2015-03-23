@@ -6,7 +6,7 @@ namespace csuzw.Roadkill.TagTreeMenu.StateMachine
 {
     internal static class Extensions
     {
-        private static readonly Regex _tokenizer = new Regex(@"([\w]+)|(\|[\w]+)|(&[\w]+)|(![\w]+)|(,[\w]+)|(\()|(\))", RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace);
+        private static readonly Regex _tokenizer = new Regex(@"([\w]+)|(\|[\w]+)|(&[\w]+)|(~[\w]+)|(,[\w]+)|(\()|(\))", RegexOptions.Compiled | RegexOptions.IgnorePatternWhitespace);
 
         public static TagTree ToTagTree(this string definition)
         {
