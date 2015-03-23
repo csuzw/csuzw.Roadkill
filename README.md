@@ -10,11 +10,27 @@ Adds Code Blocks (uses built in Syntax Highlighting plugin for styling), Tables 
 
 ## TagTreeMenu
 
-Creates simple menu pages based on provided tag tree.  Usage: `{menu=Tag1~Tag7(Tag2&Tag4(Tag3),Tag4(Tag5|Tag6))}`
+Creates simple menu structures based on provided tag tree.  Usage: `{menu=Tag1~A*(TAG2&tag4(Tag1?),Tag4(Tag5|Tag6))}`
 
-Valid symbols are `(` (open sub group), `)` (close sub group), `&` (logical AND), `|` (logical OR), `~` (null: ignored for all cases but contributes to full match), `,` (new branch) and tag names.  White space is ignored.  
+The output for this would look like (where the links are matching pages):
+
+* [A Page Link]()
+	* **TAG2, tag4**
+	* [Another Page Link]()
+		* **Tag1?**
+		* [Yet Another Page Link]()
+	* **Tag4**
+	* [Guess what? A Link!]()
+		* **Tag5, Tag6**
+		* [Have another link]()
+		* [And another]()
+		* [One more...]()
+
+Valid symbols are `(` (open sub group), `)` (close sub group), `&` (logical AND), `|` (logical OR), `~` (null: ignored for all cases but contributes to full match), `,` (new branch) and tag names which can contain the characters `a-zA-Z0-9_?*`.  White space is ignored.  When matching tags case is ignored and `?` (single character) and `*` (any number of characters) are wildcards. 
 
 Only pages whose tags match exactly will be displayed.  For example if a page has the following tags: `Alpha`, `Beta`, `Gamma` then the page would be displayed with the following definitions:
+* `*`: Wildcard will match everything
+* `alpha&BETA&GaMmA`: Case is ignored
 * `Alpha|Beta|Gamma|Delta`
 * `Alpha&Beta&Gamma`
 * `Alpha(Beta|Delta(Gamma))`: Only the final `Gamma` would match the page
@@ -22,7 +38,7 @@ Only pages whose tags match exactly will be displayed.  For example if a page ha
 
 The following would not match the page:
 * `Alpha|Delta`: `Beta` and `Gamma` aren't matched
-* `Alpha,Beta(Gamma)`: `Alpha` is in a different branch to `Beta` and `Gamma` so there is no complete match
+* `Alpha,Beta(Gamma)`: `Alpha` is in a different branch to `Beta` and `Gamma` so there is no complete match.
 
 ## PageReferences
 

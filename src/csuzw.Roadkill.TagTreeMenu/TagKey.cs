@@ -14,7 +14,7 @@ namespace csuzw.Roadkill.TagTreeMenu
             Tags = tags.ToList();
         }
 
-        public bool IsMatch(IEnumerable<string> tags, IEqualityComparer<string> comparer)
+        public bool IsMatch(IEnumerable<string> tags, TagComparer comparer)
         {
             var isMatch = false;
             foreach (var tag in Tags)
@@ -22,11 +22,11 @@ namespace csuzw.Roadkill.TagTreeMenu
                 switch (tag.Operator)
                 {
                     case TagOperator.And:
-                        isMatch &= tags.Contains(tag.Name, comparer);
+                        isMatch &= tags.Any(t => comparer.IsMatch(t, tag.Name));
                         break;
                     case TagOperator.Or:
                     case TagOperator.None:
-                        isMatch |= tags.Contains(tag.Name, comparer);
+                        isMatch |= tags.Any(t => comparer.IsMatch(t, tag.Name));
                         break;
                     case TagOperator.Null:
                     default:
