@@ -16,8 +16,9 @@ namespace csuzw.Roadkill.TagTreeMenu
 
         public IEnumerable<PageMetaData> GetPages(params TagKey[] keys)
         {
+            var comparer = StringComparer.CurrentCultureIgnoreCase;
             var superset = keys.SelectMany(k => k.Tags.Select(t => t.Name)).Distinct();
-            return _pages.Value.Where(p => keys.All(t => t.IsMatch(p.Tags)) && !p.Tags.Except(superset).Any()).OrderBy(p => p.Name);
+            return _pages.Value.Where(p => keys.All(t => t.IsMatch(p.Tags, comparer)) && !p.Tags.Except(superset, comparer).Any()).OrderBy(p => p.Name);
         }
     }
 }

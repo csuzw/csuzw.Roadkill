@@ -100,7 +100,7 @@ Transform this shit!
 
 ## Bongos";
 
-            public const string TagTreeMenu = @"{menu=One~Test(Two(Four),Three(Five|Six))}";
+            public const string TagTreeMenu = @"{menu=One~Test(two(FOur),ThrEe(Five|SIX))}";
 
             public const string PageReferences = @"{PageReferences=Foo}";
         }
